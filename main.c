@@ -17,7 +17,26 @@ char **lsh_split_line(char *line){
 		tokens[position] = token;
 		position++;
 	}
-
+	if (!tokens){
+		fprintf(stderr, "mysh: allocation error\n");
+		exit(EXIT_FAILURE);
+	}
+	token = strtok(line, LSH_TOK_DELIM);
+	while (token != NULL) {
+		tokens[position] = token;
+		position++;
+		if (position >= bufsize){
+			bufsize += LSH_TOK_BUFSIZE;
+			tokens = realloc(tokens, bufsize * sizeof(char*));
+			if (!tokens){
+				fprintf(stderr, "failure to allocate space\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+		token = strtok(NULL, LSH_TOK_DELIM);
+	}
+	tokens[position] = NULL;
+	return tokens;
 }
 char *mysh_read_line(void){
 	
