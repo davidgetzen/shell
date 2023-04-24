@@ -22,3 +22,9 @@
 	 -Tokenizing input
 		-For the time being, we will only accept words or characters as arguments, not quotes or slashes
 		-We will split on whitespaces
+	-mysh_split_line: function for tokenizing/splitting char buffer data returned by mysh_read_line
+		-Similar approach to mysh_read_line: use malloc to allocate a block of a preset size, then dynamically allocate more 
+		memory if the position pointer exceeds the given space
+		-When tokenizing the input, we will ultimately return an array of pointers (hence the return type of **, a pointer to 
+		a pointer) 
+		-Note: strtok also appends a delimiter character '\0' to the end of each word it splits from the original input

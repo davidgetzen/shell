@@ -1,22 +1,15 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
 //Little note: in C, the keyword 'void' must actually be a parameter of the function header. Otherwise, it can accept an arbitrary number of arguments. 
-char **lsh_split_line(char *line){
+char **mysh_split_line(char *line){
 	int bufsize = LSH_TOK_BUFSIZE, position = 0;
 	char **tokens = malloc(bufsize * sizeof(char*));
 	char *token;
 
-	if(!tokens){
-		fprintf(stderr, "mysh: allocation error\n");
-		exit(EXIT_FAILURE);
-	}
-	token = strtok(line, LSH_TOK_DELIM);
-	while (token != NULL){
-		tokens[position] = token;
-		position++;
-	}
 	if (!tokens){
 		fprintf(stderr, "mysh: allocation error\n");
 		exit(EXIT_FAILURE);
@@ -46,7 +39,7 @@ char *mysh_read_line(void){
 	int c; 
 
 	if(!buffer){
-		fprint(stderr, "mysh: allocation error\n");
+		fprintf(stderr, "mysh: allocation error\n");
 		exit(EXIT_FAILURE);
 	}
 	
@@ -68,7 +61,7 @@ char *mysh_read_line(void){
 		//If position is out of bounds, reallocate the block with twice the memory space 
 		if (position >= bufsize){
 			bufsize += LSH_RL_BUFSIZE;
-			realloc(buffer, bufsize);
+			buffer = realloc(buffer, bufsize);
 			if (!buffer){
 				fprintf(stderr, "mysh: allocation error\n");
 				exit(EXIT_FAILURE);
