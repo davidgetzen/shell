@@ -1,2 +1,2 @@
 main:
-	gcc main.c -o use.exe
+	gcc main.c -o use.exe -Wall
