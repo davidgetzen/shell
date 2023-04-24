@@ -1,0 +1,24 @@
+**These notes are for my personal understanding. If they help you, I'm glad!**
+-The basic lifetime of a shell
+	-What does a shell do within its lifetime?
+		-1. Initialize
+			-Here, a shell reads and execustes its configuration files. These change the aspects of the shell's behavior. 
+		-2. Interpret
+			-Here, the shell reads commands from stdin (which could come from user-input or a file) and exexecutes them.
+		-3. Terminate
+			-After the shell's commands are executed, it additionally executes any shutdown commands, frees up any memory, and terminates.
+-Basic code of the program
+	-Getting user input:
+		-In C, you do not know how many arguments a user will pass to the input ahead of time
+			-Therefore, you need to start with a block to contain user input, and if they exceed it, you need to 
+			reallocate with more space.
+			-You need to create a function which returns a pointer to this block (as though it were a char array), malloc
+			the initial size of the block (the size will be a macro set to 1024), and realloc the pointer 
+			to the beginning of the char array to a larger block when your position counter exceeds the current size of the 
+			block
+			-Moreover, you need to take each character as input using the getChar function, and take each char as an int
+			(so we can check for EOF, which itself is an int); we also need to check for '\n' characters
+				-If we reach either value, append the '\0' delimiter to the char array and return the pointer to the beginning
+	 -Tokenizing input
+		-For the time being, we will only accept words or characters as arguments, not quotes or slashes
+		-We will split on whitespaces
