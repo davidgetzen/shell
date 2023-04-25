@@ -28,3 +28,22 @@
 		-When tokenizing the input, we will ultimately return an array of pointers (hence the return type of **, a pointer to 
 		a pointer) 
 		-Note: strtok also appends a delimiter character '\0' to the end of each word it splits from the original input
+-The shell part: beyond parsing
+	-Main function of shells: starting processes
+	-Two ways of starting processes:
+		-1. Being Init
+			-Init: the process which the unix kernel loads and executes when the computer boots, runs for however long
+			the computer is operating
+		-2. The fork() system call
+			-When this is called, the operating system makes a duplicate of the current process and runs them both (original 
+			is the parent, new is called the child process)
+			-fork() returns 0 to the child process and the process ID number (PID) of the child to the parent 
+				-Therefore, the only way for a new process to start is by an existing one duplicating itself
+			-However, what if we want to do more than just clone the current process?
+				-Here, we can make use of the exec() system call, which replaces the currently-running program with
+				an entirely new one 
+				-When a call to exec() is made, the current process stops running and loads up the new one
+					-a process never returns from a call made to exec()
+		-Therefore, the building blocks of how most programs are run on Unix consists of a program forking a duplicate of itself,
+		then using exec to run a different process in the place of its child process 
+		-The parent process can do other things and monitor the child process with the use of the system call wait()

@@ -31,6 +31,32 @@ char **mysh_split_line(char *line){
 	tokens[position] = NULL;
 	return tokens;
 }
+int mysh_launch(char **args){
+	//Below: pid_t is an unsigned int type capable of representing a process ID
+	pid_t pid, wpid;
+	int status;
+	pid = fork();
+	if (pid == 0){
+		//Child process
+		if (execvp(args[0], args) == -1){
+			perror("mysh");
+		}
+		exit(EXIT_FAILURE);
+
+	} else if (pid < 0){
+		//Error forking
+		perror("mysh");
+	} else {
+		//Parent process
+		do {
+			wpid = waitpid(pid, &status, WUNTRACED);
+
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+
+	}
+	return 1;
+
+}
 char *mysh_read_line(void){
 	
 	int bufsize = LSH_RL_BUFSIZE;
