@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
@@ -166,8 +168,20 @@ void mysh_loop(void){
 
 	} while(status);
 }
+//Check if the command is within the builtin function set; if it is, run it; if it isn't, call mysh_launch to run it 
+int lsh_execute(char **args){
+	int i;
+	if (args[0] == NULL) {
+		return 1;
+	}
+	for (i = 0; i < mysh_num_builtins(); i++) {
+		if (strcmp(args[0], builtin_str[i]) == 0){
+			return (*builtin_func[i])(args);
+		}
 
-
+	}
+	return mysh_launch(args);
+}
 
 
 
