@@ -5,6 +5,56 @@
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
 //Little note: in C, the keyword 'void' must actually be a parameter of the function header. Otherwise, it can accept an arbitrary number of arguments. 
+
+//Below: function declarations for builtin commands that will be utilized
+int mysh_cd(char **args);
+int mysh_help(char **args);
+int mysh_exit(char **args);
+
+//List of builtin commands followed by functions they allign with
+char *builtin_str[] = {
+	"cd",
+	"help",
+	"exit"
+};
+
+int (*builtin_func[]) (char**) = {
+	&mysh_cd,
+	&mysh_help,
+	&mysh_exit,
+};
+
+int mysh_num_builtins() {
+	return sizeof(builtin_str) / sizeof(char *);
+}
+
+int mysh_cd(char **args) {
+	if (args[1] == NULL) {
+		fprintf(stderr, "mysh expected argument to \"cd\" \n");
+	} else {
+		if (chdir(args[1]) != 0) {
+			perror("mysh");
+		}
+	}
+	return 1;
+}
+
+int mysh_help (char **args) {
+	int i;
+	printf("My shell\n");
+	printf("Type program names and arguments, the following are built-in:\n");
+	for (i = 0; i < mysh_num_builtins(); i++){
+		printf(" %s\n", builtin_str[i]);
+	
+	}
+	printf("Use the man command for information on other programs");
+	return 1;
+}
+
+int lsh_exit(char **args){
+	return 0;
+}
+
 char **mysh_split_line(char *line){
 	int bufsize = LSH_TOK_BUFSIZE, position = 0;
 	char **tokens = malloc(bufsize * sizeof(char*));

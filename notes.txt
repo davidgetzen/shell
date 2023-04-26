@@ -47,3 +47,21 @@
 		-Therefore, the building blocks of how most programs are run on Unix consists of a program forking a duplicate of itself,
 		then using exec to run a different process in the place of its child process 
 		-The parent process can do other things and monitor the child process with the use of the system call wait()
+-mysh_launch
+	-takes the list of arguments tokenized and passed in earlier 
+	-forks the current process running and saves the return value
+	-in the child process returned by the call to fork(), we want to run the command given by the user 	
+		-to do this, we use execvp, which is a variant of the exec system call 
+			-execvp(): expects a program name and an array (called a vector) 
+				-if the call returns -1, we know there was an error with execvp and return an appropriate error message
+	-if the call to fork returns a value < 0, we know there was an error in the call to fork() and print an error message
+	-third condition occurs when the call to fork() works
+		-in this instance, the parent process will land within the do-while loop and wait for the child process to conclude
+		-here, we use waitpid() to wait for the process's state to change 
+			-as waitpid() has many different configurations, we use the macros given by waitpid() to determine whether 
+			or not the child process has finished completing (when it either exits or is killed) 
+			-mysh_launch will return a 1 ultimately to signal that we can give it more input 
+-shell builtins
+	-most commands a shell executes are programs, but not all of them, some are built directly into the shell
+	-therefore, we need to define a few built-in shell functions (cd, help, exit) and implement them with system calls
+-builtin_func[] is defined as an array of function pointers (the functions all take a string and return an int)
