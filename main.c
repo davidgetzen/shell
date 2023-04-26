@@ -12,7 +12,7 @@
 int mysh_cd(char **args);
 int mysh_help(char **args);
 int mysh_exit(char **args);
-
+int mysh_execute(char **args);
 //List of builtin commands followed by functions they allign with
 char *builtin_str[] = {
 	"cd",
@@ -53,7 +53,7 @@ int mysh_help (char **args) {
 	return 1;
 }
 
-int lsh_exit(char **args){
+int mysh_exit(char **args){
 	return 0;
 }
 
@@ -169,7 +169,7 @@ void mysh_loop(void){
 	} while(status);
 }
 //Check if the command is within the builtin function set; if it is, run it; if it isn't, call mysh_launch to run it 
-int lsh_execute(char **args){
+int mysh_execute(char **args){
 	int i;
 	if (args[0] == NULL) {
 		return 1;
