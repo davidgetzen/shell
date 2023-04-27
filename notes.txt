@@ -65,3 +65,7 @@
 	-most commands a shell executes are programs, but not all of them, some are built directly into the shell
 	-therefore, we need to define a few built-in shell functions (cd, help, exit) and implement them with system calls
 -builtin_func[] is defined as an array of function pointers (the functions all take a string and return an int)
+-on making rm
+    -should not use c's 'remove()' function, rather, use the system calls (unlink() and rmdir()) to perform
+    what remove() does
+    -make sure that this is a shell and not a wrapper for some functions already within the c library

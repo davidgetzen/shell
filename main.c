@@ -44,10 +44,17 @@ int mysh_cd(char **args) {
 	return 1;
 }
 int mysh_rm (char **args){
+    fprintf("%s\n", args);
     if (args[1] == NULL){
         fprintf(stderr, "mysh expected argument to rm \n");
+    } else if (strcmp(args[1], "r")) {
+        if (rmdir(args[2]) != 0){
+            perror("mysh");
+        };
     } else {
-        remove(args[1]);
+        if (unlink(args[1]) != 0){
+                perror("mysh");
+        }
     }
     return 1;
     }
