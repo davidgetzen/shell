@@ -14,19 +14,22 @@ int mysh_help(char **args);
 int mysh_exit(char **args);
 int mysh_execute(char **args);
 int mysh_rm(char **args);
+int mysh_touch(char **args);
 //List of builtin commands followed by functions they allign with
 char *builtin_str[] = {
 	"cd",
 	"help",
 	"exit",
-    "rm"
+    "rm",
+    "touch"
 };
 
 int (*builtin_func[]) (char**) = {
 	&mysh_cd,
 	&mysh_help,
 	&mysh_exit,
-    &mysh_rm
+    &mysh_rm,
+    &mysh_touch
 };
 
 int mysh_num_builtins() {
