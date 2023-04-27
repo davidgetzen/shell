@@ -13,17 +13,20 @@ int mysh_cd(char **args);
 int mysh_help(char **args);
 int mysh_exit(char **args);
 int mysh_execute(char **args);
+int mysh_rm(char **args);
 //List of builtin commands followed by functions they allign with
 char *builtin_str[] = {
 	"cd",
 	"help",
-	"exit"
+	"exit",
+    "rm"
 };
 
 int (*builtin_func[]) (char**) = {
 	&mysh_cd,
 	&mysh_help,
 	&mysh_exit,
+    &mysh_rm
 };
 
 int mysh_num_builtins() {
@@ -40,7 +43,14 @@ int mysh_cd(char **args) {
 	}
 	return 1;
 }
-
+int mysh_rm (char **args){
+    if (args[1] == NULL){
+        fprintf(stderr, "mysh expected argument to rm \n");
+    } else {
+        remove(args[1]);
+    }
+    return 1;
+    }
 int mysh_help (char **args) {
 	int i;
 	printf("My shell\n");
