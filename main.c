@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <fcntl.h>
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
@@ -45,6 +46,18 @@ int mysh_cd(char **args) {
 		}
 	}
 	return 1;
+}
+//note: mysh_touch only supports the creation of new files
+//TODO: add functionality to check if the file has already been created
+int mysh_touch(char **args){
+    if (args[1] == NULL){
+        fprintf(stderr, "mysh expected argument to touch\n");
+    } else {
+        if (open(args[1], O_CREAT) != 0){
+            perror("mysh");
+        }
+    }
+    return 1;
 }
 int mysh_rm (char **args){
     if (args[1] == NULL){
