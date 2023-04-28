@@ -8,9 +8,8 @@
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
-//TODO: add rm for directories, add mkdir, add piping functionality, revise touch to check if file has already been created
-
-
+//TODO: add ls functionality (look into open() to accomplish this)
+//TODO: add rm for directories, add piping functionality, add error-checking for rm
 //Little note: in C, the keyword 'void' must actually be a parameter of the function header. Otherwise, it can accept an arbitrary number of arguments. 
 
 //Below: function declarations for builtin commands that will be utilized
@@ -51,9 +50,6 @@ int mysh_cd(char **args) {
 	}
 	return 1;
 }
-//note: mysh_touch only supports the creation of new files
-//TODO: add functionality to check if the file has already been create
-//TODO: implement some sort of record for file descriptors returned by open() calls?
 int mysh_touch(char **args){
     if (args[1] == NULL){
         fprintf(stderr, "mysh expected argument to touch\n");
@@ -62,9 +58,9 @@ int mysh_touch(char **args){
         if (stat(args[1], &usefile) == 0){
             fprintf(stderr, "file already exists!\n");
         } else {
-            if (open(args[1], O_CREAT) <= 0){
-            perror("mysh");
-        }
+                if (open(args[1], O_CREAT) <= 0){
+                perror("mysh");
+            }
         }
     }
     return 1;
