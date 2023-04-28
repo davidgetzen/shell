@@ -4,6 +4,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
@@ -25,7 +26,7 @@ char *builtin_str[] = {
 	"help",
 	"exit",
     "rm",
-    "touch"
+    "touch",
 };
 
 int (*builtin_func[]) (char**) = {
@@ -33,7 +34,7 @@ int (*builtin_func[]) (char**) = {
 	&mysh_help,
 	&mysh_exit,
     &mysh_rm,
-    &mysh_touch
+    &mysh_touch,
 };
 
 int mysh_num_builtins() {
@@ -57,12 +58,18 @@ int mysh_touch(char **args){
     if (args[1] == NULL){
         fprintf(stderr, "mysh expected argument to touch\n");
     } else {
-        if (open(args[1], O_CREAT) <= 0){
+        struct stat usefile;
+        if (stat(args[1], &usefile) == 0){
+            fprintf(stderr, "file already exists!\n");
+        } else {
+            if (open(args[1], O_CREAT) <= 0){
             perror("mysh");
+        }
         }
     }
     return 1;
 }
+
 int mysh_rm (char **args){
     if (args[1] == NULL){
         fprintf(stderr, "mysh expected argument to rm \n");
