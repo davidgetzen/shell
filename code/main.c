@@ -1,3 +1,4 @@
+#include "title.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -11,7 +12,7 @@
 //TODO: add ls functionality (look into open() to accomplish this)
 //TODO: add rm for directories, add piping functionality, add error-checking for rm
 //Little note: in C, the keyword 'void' must actually be a parameter of the function header. Otherwise, it can accept an arbitrary number of arguments. 
-
+extern void title(void);
 //Below: function declarations for builtin commands that will be utilized
 int mysh_cd(char **args);
 int mysh_help(char **args);
@@ -225,6 +226,7 @@ int main(int argc, char **argv){
 	//Load config files
 	
 	//Run command loop
+    title();
 	mysh_loop();
 
 	//Perform shutdown/cleanup

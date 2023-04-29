@@ -1,5 +1,6 @@
+#include "title.h"
 #include <stdio.h>
-int main(){
+void title(void){
     FILE *infile;
     char input[255];
     infile = fopen("design.txt", "r");
@@ -17,6 +18,5 @@ int main(){
 
         }
     fclose(infile);
-
-    return 0;
+    return;
 }
