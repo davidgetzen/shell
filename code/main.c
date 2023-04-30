@@ -20,6 +20,7 @@ int mysh_exit(char **args);
 int mysh_execute(char **args);
 int mysh_rm(char **args);
 int mysh_touch(char **args);
+int mysh_ls(char **args);
 //List of builtin commands followed by functions they allign with
 char *builtin_str[] = {
 	"cd",
@@ -27,6 +28,7 @@ char *builtin_str[] = {
 	"exit",
     "rm",
     "touch",
+    "ls"
 };
 
 int (*builtin_func[]) (char**) = {
@@ -35,6 +37,7 @@ int (*builtin_func[]) (char**) = {
 	&mysh_exit,
     &mysh_rm,
     &mysh_touch,
+    &mysh_ls,
 };
 
 int mysh_num_builtins() {
@@ -92,7 +95,9 @@ int mysh_help (char **args) {
 int mysh_exit(char **args){
 	return 0;
 }
-
+int mysh_ls(char **args){
+    return 1;
+}
 char **mysh_split_line(char *line){
 	int bufsize = LSH_TOK_BUFSIZE, position = 0;
 	char **tokens = malloc(bufsize * sizeof(char*));

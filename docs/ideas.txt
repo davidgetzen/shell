@@ -1,1 +1,1 @@
--add a better into message that what you have currently (maybe something with ascii art?)
+-make your own man pages for builtin functions when finished?
