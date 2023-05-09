@@ -82,13 +82,13 @@ int mysh_rm (char **args){
     }
 int mysh_help (char **args) {
 	int i;
-	printf("My shell\n");
-	printf("Type program names and arguments, the following are built-in:\n");
+	printf("Welcome to my shell! This is a program which leverages system calls to communicate with the kernel.\n");
+	printf("\nTo use the shell, type program names and arguments. The following are built-in:\n");
 	for (i = 0; i < mysh_num_builtins(); i++){
-		printf(" %s\n", builtin_str[i]);
+		printf("%s\n", builtin_str[i]);
 	
 	}
-	printf("Use the man command for information on other programs");
+	printf("Use the man command for information on other programs\n");
 	return 1;
 }
 
