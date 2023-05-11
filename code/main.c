@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <dirent.h>
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
@@ -96,6 +97,14 @@ int mysh_exit(char **args){
 	return 0;
 }
 int mysh_ls(char **args){
+    //struct dirent *de;
+    //DIR *dr = opendir('.');
+    int fd = open('.', O_DIRECTORY);
+    if (args[1] != NULL){
+        fprintf(stderr, "mysh expected no arguments to ls \n");
+    } else {
+        printf("%d\n", fd);    
+    }
     return 1;
 }
 char **mysh_split_line(char *line){
