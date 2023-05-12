@@ -99,11 +99,26 @@ int mysh_exit(char **args){
 int mysh_ls(char **args){
     //struct dirent *de;
     //DIR *dr = opendir('.');
-    int fd = open('.', O_DIRECTORY);
+    long size;
+    char *buf;
+    char *ptr;
+    char *buf_sec;
+    struct dirent *use;
+    size = pathconf(".", _PC_PATH_MAX);
+    if ((buf = (char *)malloc((size_t)size)) != NULL){
+        ptr = getcwd(buf, (size_t)size);
+    }
+    int fd = open(ptr, O_DIRECTORY);
     if (args[1] != NULL){
         fprintf(stderr, "mysh expected no arguments to ls \n");
     } else {
-        printf("%d\n", fd);    
+        if (fd < 0){
+            perror("mysh"); 
+        }
+        ssize_t test = getdirentries(fd, buf_sec, (size_t) size, (off_t) ptr);
+        printf("%d\n", fd);
+        printf("%d\n", test);
+
     }
     return 1;
 }
