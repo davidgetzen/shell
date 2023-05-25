@@ -58,8 +58,8 @@ int mysh_cat(char **args){
         } else {
             size_t BUFF_SIZE = (size_t)fstat.st_size;
             char *buf = calloc((size_t) sizeof(char), BUFF_SIZE);
-            int check;
-            while ((check = read(fd, buf, BUFF_SIZE)) > 0){
+            //int check;
+            while ((read(fd, buf, BUFF_SIZE)) > 0){
                 if(write(1, buf, BUFF_SIZE) == -1){
                     printf("Error with writing: %s", strerror(errno));
 
