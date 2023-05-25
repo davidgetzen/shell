@@ -81,3 +81,11 @@
                     stat stuct taken as an argument in the process of the system call
                     -if the stat struct can be successfully populated, the file with the relative name 
                     taken as a first argument already exists
+-on cat
+    -written with stat, read, and write system calls
+        -used the stat system call to check if the desired file existed, then utilized the populated stat stuct to 
+        retrieve size (in bytes) of the file to be read from
+        -malloc'ed buffer size of byte-count from stat struct
+        -obtained fd of file to be read from with open() system call, used read in while-loop while writing to 
+        fd 1 (fd of stdout)
+        -freed chunk of memory which began at pointer to buffer

@@ -5,8 +5,14 @@ a project using Vim.
 Q: What functionality does this project currently support?
 A: This project comprises a shell that can execute 'cd', 'help', and 'exit' bash commands. 
 
+Q: What even is a shell?
+A: A shell is a piece of software that interacts with the kernel of an operating system. It allows a user to control and begin processes,
+in addition to creating and deleting files.
 
-Q: How will you improve it moving forward?
-A: I will add support for more complex input, and provide additional functionality for 'ls', 'mkdir' and 'rm' bash commands. Additionally,
-I would like to recreate some form of piping for my shell as well. 
-
+Functionality moving forward:
+    -ls
+    -piping
+    -append tokens (&&, etc)
+    -echo
+    -find 
+    -redirection (>> and >)
