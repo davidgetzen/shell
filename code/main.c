@@ -3,10 +3,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <errno.h>
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
@@ -50,8 +52,13 @@ int mysh_cat(char **args){
     if (args[1] == NULL){
         fprintf(stderr, "mysh expected argument to \"cat\"\n");
     } else {
-
-        printf("do something with %s\n", args[1]);
+        struct stat fstat;
+        if (stat(args[1], &fstat) < 0){
+            perror(errno);
+        } else {
+            printf("do something with %s\n", args[1]);
+            printf("the file %s is %d bytes\n", args[1], (int)fstat.st_size);
+        }
     }
     return 1;
 }
