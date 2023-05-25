@@ -6,7 +6,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/stat.h>
 #include <dirent.h>
 #include <errno.h>
 #define LSH_RL_BUFSIZE 1024
@@ -53,11 +52,20 @@ int mysh_cat(char **args){
         fprintf(stderr, "mysh expected argument to \"cat\"\n");
     } else {
         struct stat fstat;
-        if (stat(args[1], &fstat) < 0){
-            perror(errno);
+        int fd;
+        if ((stat(args[1], &fstat) < 0) || (fd = open(args[1],0)) == -1){
+            printf("Error with desired file: %s\n", strerror(errno));
         } else {
-            printf("do something with %s\n", args[1]);
-            printf("the file %s is %d bytes\n", args[1], (int)fstat.st_size);
+            size_t BUFF_SIZE = (size_t)fstat.st_size;
+            char *buf = calloc((size_t) sizeof(char), BUFF_SIZE);
+            int check;
+            while ((check = read(fd, buf, BUFF_SIZE)) > 0){
+                if(write(1, buf, BUFF_SIZE) == -1){
+                    printf("Error with writing: %s", strerror(errno));
+
+                 }    
+            }
+            free(buf);
         }
     }
     return 1;
