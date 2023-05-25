@@ -22,6 +22,7 @@ int mysh_execute(char **args);
 int mysh_rm(char **args);
 int mysh_touch(char **args);
 int mysh_ls(char **args);
+int mysh_cat(char **args);
 //List of builtin commands followed by functions they allign with
 char *builtin_str[] = {
 	"cd",
@@ -29,7 +30,7 @@ char *builtin_str[] = {
 	"exit",
     "rm",
     "touch",
-    "ls"
+    "cat"
 };
 
 int (*builtin_func[]) (char**) = {
@@ -38,13 +39,22 @@ int (*builtin_func[]) (char**) = {
 	&mysh_exit,
     &mysh_rm,
     &mysh_touch,
-    &mysh_ls,
+    &mysh_cat,
+//    &mysh_ls,
 };
 
 int mysh_num_builtins() {
 	return sizeof(builtin_str) / sizeof(char *);
 }
+int mysh_cat(char **args){
+    if (args[1] == NULL){
+        fprintf(stderr, "mysh expected argument to \"cat\"\n");
+    } else {
 
+        printf("do something with %s\n", args[1]);
+    }
+    return 1;
+}
 int mysh_cd(char **args) {
 	if (args[1] == NULL) {
 		fprintf(stderr, "mysh expected argument to \"cd\" \n");
@@ -96,6 +106,7 @@ int mysh_help (char **args) {
 int mysh_exit(char **args){
 	return 0;
 }
+/*
 int mysh_ls(char **args){
     //struct dirent *de;
     //DIR *dr = opendir('.');
@@ -122,6 +133,7 @@ int mysh_ls(char **args){
     }
     return 1;
 }
+*/
 char **mysh_split_line(char *line){
 	int bufsize = LSH_TOK_BUFSIZE, position = 0;
 	char **tokens = malloc(bufsize * sizeof(char*));
