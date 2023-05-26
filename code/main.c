@@ -60,6 +60,8 @@ int mysh_echo(char **args){
         if(write(1, buf, msg_size) == -1){
             printf("Error with writing: %s", strerror(errno));
         }
+        //need to do something other than below but temporary fix
+        printf("\n");
     }
     return 1;
 }
