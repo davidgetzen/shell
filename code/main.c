@@ -54,7 +54,7 @@ int mysh_echo(char **args){
     if (args[1] == NULL){
         fprintf(stderr, "mysh expected argument to \"echo\"\n");
     } else {
-        //printf("%s\n", args[1]);
+        //issue: garbage values print occationally with use of echo, maybe use calloc to initialize the buffer instead
         size_t msg_size = (size_t)(sizeof(args[1]));
         char* buf = (char*)(args[1]);
         if(write(1, buf, msg_size) == -1){
