@@ -24,6 +24,7 @@ int mysh_rm(char **args);
 int mysh_touch(char **args);
 int mysh_ls(char **args);
 int mysh_cat(char **args);
+int mysh_echo(char **args);
 //List of builtin commands followed by functions they allign with
 char *builtin_str[] = {
 	"cd",
@@ -31,7 +32,8 @@ char *builtin_str[] = {
 	"exit",
     "rm",
     "touch",
-    "cat"
+    "cat",
+    "echo"
 };
 
 int (*builtin_func[]) (char**) = {
@@ -41,11 +43,25 @@ int (*builtin_func[]) (char**) = {
     &mysh_rm,
     &mysh_touch,
     &mysh_cat,
+    &mysh_echo
 //    &mysh_ls,
 };
 
 int mysh_num_builtins() {
 	return sizeof(builtin_str) / sizeof(char *);
+}
+int mysh_echo(char **args){
+    if (args[1] == NULL){
+        fprintf(stderr, "mysh expected argument to \"echo\"\n");
+    } else {
+        //printf("%s\n", args[1]);
+        size_t msg_size = (size_t)(sizeof(args[1]));
+        char* buf = (char*)(args[1]);
+        if(write(1, buf, msg_size) == -1){
+            printf("Error with writing: %s", strerror(errno));
+        }
+    }
+    return 1;
 }
 int mysh_cat(char **args){
     if (args[1] == NULL){
