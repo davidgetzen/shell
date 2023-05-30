@@ -12,6 +12,7 @@
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
 //TODO: add ls functionality (look into open() to accomplish this)
+//TODO: add mkdir
 //TODO: add rm for directories, add piping functionality, add error-checking for rm
 //Little note: in C, the keyword 'void' must actually be a parameter of the function header. Otherwise, it can accept an arbitrary number of arguments. 
 extern void title(void);
@@ -25,6 +26,7 @@ int mysh_touch(char **args);
 int mysh_ls(char **args);
 int mysh_cat(char **args);
 int mysh_echo(char **args);
+//int mysh_mkdir(char **args);
 //List of builtin commands followed by functions they allign with
 char *builtin_str[] = {
 	"cd",
@@ -43,7 +45,7 @@ int (*builtin_func[]) (char**) = {
     &mysh_rm,
     &mysh_touch,
     &mysh_cat,
-    &mysh_echo
+    &mysh_echo,
 //    &mysh_ls,
 };
 
@@ -57,6 +59,7 @@ int mysh_echo(char **args){
         //issue: garbage values print occationally with use of echo, maybe use calloc to initialize the buffer instead
         size_t msg_size = (size_t)(sizeof(args[1]));
         char* buf = (char*)(args[1]);
+
         if(write(1, buf, msg_size) == -1){
             printf("Error with writing: %s", strerror(errno));
         }
