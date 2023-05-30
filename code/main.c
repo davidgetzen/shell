@@ -11,8 +11,8 @@
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
+//TODO: REVISE INPUT PARSING FUNCTION/ECHO
 //TODO: add ls functionality (look into open() to accomplish this)
-//TODO: add mkdir
 //TODO: add rm for directories, add piping functionality, add error-checking for rm
 //Little note: in C, the keyword 'void' must actually be a parameter of the function header. Otherwise, it can accept an arbitrary number of arguments. 
 extern void title(void);
